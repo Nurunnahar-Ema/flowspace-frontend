@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* আপনার কাস্টম সিএসএস ভ্যারিয়েবল (থিম কালার) */
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+/* সিস্টেমের ডার্ক মোড সাপোর্ট */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+}
+
+/* ১. ফন্ট ইমপোর্ট (Supabase থেকে) */
+
+/* আরবির জন্য (Amiri) */
+@font-face {
+  font-family: 'Amiri';
+  src: url('https://bkcsykkrcingzlhqcgll.supabase.co/storage/v1/object/public/ALL_Font-SaaS/Amiri-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* বাংলার জন্য (Kalpurush) */
+@font-face {
+  font-family: 'Kalpurush';
+  src: url('https://bkcsykkrcingzlhqcgll.supabase.co/storage/v1/object/public/ALL_Font-SaaS/kalpurush.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ফিক্সড উইডথ টেক্সটের জন্য (Source Code Pro) */
+@font-face {
+  font-family: 'SourceCode';
+  src: url('https://bkcsykkrcingzlhqcgll.supabase.co/storage/v1/object/public/ALL_Font-SaaS/SourceCodePro-VariableFont_wght.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* ২. গ্লোবাল সেটিংস */
+* {
+  /* ইংরেজি থাকলে Times New Roman, বাংলা থাকলে Kalpurush, আরবি থাকলে Amiri */
+  font-family: 'Times New Roman', 'Kalpurush', 'Amiri', serif !important;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+}
+
+/* #root থেকে ফিক্সড উইডথ ১১২৬ পিক্সেল এবং টেক্সট এলাইন সেন্টার বাদ দেওয়া হয়েছে */
+#root {
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* কাস্টম হেডিং বা প্যারাগ্রাফের ফন্ট ফ্যামিলি ঠিক রাখার জন্য */
+h1, h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+}
