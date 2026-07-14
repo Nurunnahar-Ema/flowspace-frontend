@@ -19,7 +19,7 @@ export const UserLayout = () => {
         <path d="M4 19.5A2.5 2.5 0 006.5 22h11a2.5 2.5 0 002.5-2.5V6H4v13.5zM20 4h-4l-2-2h-4l-2 2H4v2h16V4z"/>
       </svg>
     )},
-    { key: '/admin/studentInfo', label: 'স্টুডেন্ট প্রোফাইল', icon: (
+    { key: '/upload', label: ' UPLOAD', icon: (
       <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
       </svg>

@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { UserLayout } from "./component/userLayout";
 
+import { FileUploader } from "./user/upload";
+
 
 
 
@@ -21,6 +23,7 @@ const App = () => {
                         <Route element={<UserLayout />}>
                           <Route path="/" element={<div>Dashboard</div>} />
                           <Route path="/dashboard" element={<div>Admin Dashboard</div>} />
+                          <Route path="/upload" element={<FileUploader />} />
                         </Route>
 
                     </Routes>

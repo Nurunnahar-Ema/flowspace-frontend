@@ -5,10 +5,10 @@ const url = window.location.hostname === "127.0.0.1" ||
             window.location.hostname === "localhost" || 
             window.location.hostname === "192.168.0.103"
     ? "http://127.0.0.1:8787" 
-    : "https://api.piipra.me";
+    : "https://flowspace.piipra.me/api";
 
 const api = axios.create({
-  baseURL: url + '/edu-bd',
+  baseURL: url,
   timeout: 20000,
 });
 
