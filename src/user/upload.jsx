@@ -55,6 +55,7 @@ function ProgressBar({ progress }) {
 
 export const FileUploader = () => {
   const [progress, setProgress] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
 
   const uploadFile = async (file) => {
     try {
@@ -83,40 +84,40 @@ export const FileUploader = () => {
 
         const chunk = file.slice(i, i + chunkSize);
 
-        // ২. Presigned URL আনো
-        // Presigned URL আনো
-        // Presigned URL আনো
         const res = await api.post("/api/upload/get-part-url", {
-        key: fileKey,
-        uploadId,
-        partNumber,
+          key: fileKey,
+          uploadId,
+          partNumber,
+          contentLength: chunk.size, // Important: exact size পাঠাতে হবে
         });
+
         const { url, headers } = res.data;
 
-        // Chunk আপলোড করো
         const uploadRes = await fetch(url, {
-        method: "PUT",
-        body: chunk,
-        headers, // signed headers ব্যবহার করো
+          method: "PUT",
+          body: chunk,
+          headers: {
+            "Authorization": headers["Authorization"],
+            "x-amz-date": headers["x-amz-date"],
+            "x-amz-content-sha256": headers["x-amz-content-sha256"],
+            // Content-Length browser auto দিবে, কিন্তু আমরা sign করেছি তাই match করবে
+          },
         });
 
-        const etag = uploadRes.headers.get("ETag");
-
-        if (!uploadRes.ok || !etag) {
-          console.error(`Part ${partNumber} আপলোড ব্যর্থ হয়েছে!`);
+        if (!uploadRes.ok) {
+          const text = await uploadRes.text();
+          console.error(`Part ${partNumber} failed:`, text);
           return;
         }
 
-        // ETag এর ভেতরের অতিরিক্ত কোটেশন (") থাকলে তা ট্রিম করা
-        etag = etag.replace(/"/g, "");
-
+        const etag = uploadRes.headers.get("ETag").replace(/"/g, "");
         const partInfo = { PartNumber: partNumber, ETag: etag };
         parts.push(partInfo);
-        
+
         // লোকাল স্টোরেজে সেভ
         localStorage.setItem(localKey, JSON.stringify(parts));
 
-        // প্রোগ্রেস বার ফিক্স (১০০% এর বেশি যেন না যায়)
+        // প্রোগ্রেস বার ফিক্স (১০০% এর বেশি যেন না যায়)
         const currentUploadedBytes = Math.min(i + chunkSize, file.size);
         setProgress((currentUploadedBytes / file.size) * 100);
       }
@@ -134,6 +135,9 @@ export const FileUploader = () => {
       if (completeRes.data.success) {
         console.log("Upload complete!");
         localStorage.removeItem(localKey); // আপলোড শেষ, লোকালস্টোরেজ ক্লিন
+        // /complete এর পর
+        const res = await api.post("/api/upload/get-download-url", { key: fileKey });
+        setImageUrl(res.data.url); // এখন browser এ open হবে
       }
 
     } catch (error) {
@@ -149,6 +153,8 @@ export const FileUploader = () => {
         }}
       />
       <ProgressBar progress={progress.toFixed(2)} />
+      <img src={imageUrl} alt="uploaded" />
+
     </div>
   );
 };
