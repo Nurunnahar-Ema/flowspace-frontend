@@ -17,14 +17,14 @@ api.interceptors.request.use(
     let token = null;
 
     // ১. রুট অনুযায়ী সঠিক টোকেনটি বাছাই করা (যাতে একটি আরেকটিকে ওভাররাইট না করে)
-    if (config.url.includes('/admin/')) {
-      token = Cookies.get('admin_auth_token');
-    } else if (config.url.includes('/teacher/')) {
-      token = Cookies.get('teacher_auth');
-    } else {
-      // ডিফল্ট হিসেবে স্টুডেন্ট টোকেন
-      token = Cookies.get('student_auth');
-    }
+    if (config.url.includes('/')) {
+      token = Cookies.get('flowspace_user_auth');}
+    // } else if (config.url.includes('/teacher/')) {
+    //   token = Cookies.get('teacher_auth');
+    // } else {
+    //   // ডিফল্ট হিসেবে স্টুডেন্ট টোকেন
+    //   token = Cookies.get('student_auth');
+    // }
 
     // ২. হেডার সেট করা (টোকেন থাকলেই কেবল সেট হবে)
     if (token) {
@@ -40,11 +40,12 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+  
+    if (error.response && error.response.status === 401    ) {
       // টোকেন নষ্ট বা এক্সপায়ার হলে সেশন ক্লিয়ার করে লগইন পেজে রিডাইরেক্ট করতে পারেন
       // Cookies.remove('admin_auth_token');
       // window.location.href = '/admin/login'; 
-    }
+      }``
     return Promise.reject(error);
   }
 );

@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserLayout } from "./component/userLayout";
 
 import { FileUploader } from "./user/upload";
+import { UserLogin } from "./user/Login";
+import { DriveManager } from "./user/DriveManager";
 
 
 
@@ -21,7 +23,8 @@ const App = () => {
 
 
                         <Route element={<UserLayout />}>
-                          <Route path="/" element={<div>Dashboard</div>} />
+                          <Route path="/login" element={<UserLogin />} />
+                          <Route path="/storage/*" element={<DriveManager />} />
                           <Route path="/dashboard" element={<div>Admin Dashboard</div>} />
                           <Route path="/upload" element={<FileUploader />} />
                         </Route>
